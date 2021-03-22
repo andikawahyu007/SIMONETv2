@@ -247,7 +247,7 @@
 	function requestData(iface, id) 
 	{
 		$.ajax({
-			url: '<?php echo site_url("Dashboard/interface");?>',     						
+			url: '<?php echo site_url("Dashboard/interface1");?>',     						
 			type: "POST",
 			dataType: "JSON",
 			data: {iface:iface} ,
