@@ -13,9 +13,9 @@ class Log extends CI_Controller {
         $this->load->model('Log_Model', 'log_event');
     }
     
-    // public function index(){
-    //     $this->load->view('log_view');
-    // }
+    public function index(){
+        $this->load->view('log_view');
+    }
 
     function logEventJSON(){
         // function untuk mengget semua data user hotspot dari database
