@@ -23,7 +23,7 @@ class Statistic extends CI_Controller {
     }
 
     public function bandwidth(){
-        $this->load->view('statistic_bandwidth_view');
+        $this->load->view('statistic_bandwidth_line_view');
     }
 
     public function ping(){
