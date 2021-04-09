@@ -109,157 +109,161 @@ class Statistic_Model extends CI_Model {
 		
 		// IF rentang LAST 3 HOURS
 		if(substr($p['time']['start'],-6)=='111111' && substr($p['time']['end'],-6)=='111111'){ // LAST 3 HOURS
-			if(substr($p['intf'],-9) == 'Max.')
+			// if(substr($p['intf'],-9) == 'Max.')
+			// 	return array(
+			// 		'subtitle' => 'Last 3 hours - '.$this->getBandwidthData_subLast3Hours(),
+			// 		'data' => $this->getBandwidthDataMax_Last3Hours($p),
+			// 	);
+			// else 
+				if(substr($p['intf'],-4) == 'Min.')
 				return array(
 					'subtitle' => 'Last 3 hours - '.$this->getBandwidthData_subLast3Hours(),
-					'data' => $this->getBandwidthDataMax_Last3Hours($p),
-				);
-			else if(substr($p['intf'],-4) == 'Min.')
-				return array(
-					'subtitle' => 'Last 3 hours - '.$this->getBandwidthData_subLast3Hours(),
-					'data' => $this->getBandwidthDataMin_Last3Hours($p),
+					'data' => $this->getBandwidthDataUpload_Last3Hours($p),
 				);
 			else return false;	
 		}else // IF rentang LAST 6 HOURS
 		if(substr($p['time']['start'],-6)=='222222' && substr($p['time']['end'],-6)=='222222'){ // LAST 6 HOURS
-			if(substr($p['intf'],-9) == 'Max.')
+			// if(substr($p['intf'],-9) == 'Max.')
+			// 	return array(
+			// 		'subtitle' => 'Last 6 hours - '.$this->getBandwidthData_subLast6Hours(),
+			// 		'data' => $this->getBandwidthDataMax_Last6Hours($p),
+			// 	);
+			// else 
+				if(substr($p['intf'],-4) == 'Min.')
 				return array(
 					'subtitle' => 'Last 6 hours - '.$this->getBandwidthData_subLast6Hours(),
-					'data' => $this->getBandwidthDataMax_Last6Hours($p),
-				);
-			else if(substr($p['intf'],-4) == 'Min.')
-				return array(
-					'subtitle' => 'Last 6 hours - '.$this->getBandwidthData_subLast6Hours(),
-					'data' => $this->getBandwidthDataMin_Last6Hours($p),
+					'data' => $this->getBandwidthDataUpload_Last6Hours($p),
 				);
 			else return false;	
 		}
 		else if(!empty($interval)){
-			if(substr($p['intf'],-9) == 'Max.')
+			// if(substr($p['intf'],-9) == 'Max.')
+			// 	return array(
+			// 		'subtitle' => $this->getBandwidthData_sub($p),
+			// 		'data' => $this->getBandwidthDataMax_Interval($p,$interval),
+			// 	);
+			// else 
+				if(substr($p['intf'],-4) == 'Min.')
 				return array(
 					'subtitle' => $this->getBandwidthData_sub($p),
-					'data' => $this->getBandwidthDataMax_Interval($p,$interval),
-				);
-			else if(substr($p['intf'],-4) == 'Min.')
-				return array(
-					'subtitle' => $this->getBandwidthData_sub($p),
-					'data' => $this->getBandwidthDataMin_Interval($p,$interval),
+					'data' => $this->getBandwidthDataUpload_Interval($p,$interval),
 				);
 			else return false;
 		}else{
-			if(substr($p['intf'],-9) == 'Max.')
+			// if(substr($p['intf'],-9) == 'Max.')
+			// 	return array(
+			// 		'subtitle' => $this->getBandwidthData_sub($p),
+			// 		'data' => $this->getBandwidthDataMax($p),
+			// 	);
+			// else 
+				if(substr($p['intf'],-4) == 'Min.')
 				return array(
 					'subtitle' => $this->getBandwidthData_sub($p),
-					'data' => $this->getBandwidthDataMax($p),
-				);
-			else if(substr($p['intf'],-4) == 'Min.')
-				return array(
-					'subtitle' => $this->getBandwidthData_sub($p),
-					'data' => $this->getBandwidthDataMin($p),
+					'data' => $this->getBandwidthDataUpload($p),
 				);
 			else return false;
 		}
 	}
 	
-	function getBandwidthDataMax($p){
-		//CASE 
-		//	WHEN loss > 75 THEN '#ff0000'
-		//	ELSE '#00ff00'
-		//END AS `color`
-		$sql = "
-			SELECT
-				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
-				-- DATE_FORMAT(time,'%Y-%m-%d %H:%i:00') AS 'x', 
-				DATE_FORMAT(time,'%Y-%m-%d %H:%i') AS `name`,
-				rx AS `y`
-			FROM 
-				network_log 
-			WHERE 
-				interface = '".substr($p['intf'],0,-9)."' 
-				AND time>='".$p['time']['start']."' 
-				AND time <= '".$p['time']['end']."' ";
-		$_db = $this->db->query($sql)->result_array();
-		$res = array();
-		foreach($_db as $_row){
-			//$res[] = array($_row['y'],intval($_row['x']));
-			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
-			$res[] = $_row;
-		}
-		return $res;
-	}
+	// function getBandwidthDataMax($p){
+	// 	//CASE 
+	// 	//	WHEN loss > 75 THEN '#ff0000'
+	// 	//	ELSE '#00ff00'
+	// 	//END AS `color`
+	// 	$sql = "
+	// 		SELECT
+	// 			UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
+	// 			-- DATE_FORMAT(time,'%Y-%m-%d %H:%i:00') AS 'x', 
+	// 			DATE_FORMAT(time,'%Y-%m-%d %H:%i') AS `name`,
+	// 			rx AS `y`
+	// 		FROM 
+	// 			network_log 
+	// 		WHERE 
+	// 			interface = '".substr($p['intf'],0,-9)."' 
+	// 			AND time>='".$p['time']['start']."' 
+	// 			AND time <= '".$p['time']['end']."' ";
+	// 	$_db = $this->db->query($sql)->result_array();
+	// 	$res = array();
+	// 	foreach($_db as $_row){
+	// 		//$res[] = array($_row['y'],intval($_row['x']));
+	// 		$_row['x'] = intval($_row['x']);
+	// 		$_row['y'] = intval($_row['y']);
+	// 		$res[] = $_row;
+	// 	}
+	// 	return $res;
+	// }
 
-	function getBandwidthDataMax_Last3Hours($p){
-		$sql = "
-			SELECT
-				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
-				-- DATE_FORMAT(time,'%Y-%m-%d %H:%i:00') AS 'x', 
-				DATE_FORMAT(time,'%Y-%m-%d %H:%i') AS `name`,
-				rx AS `y`
-			FROM 
-				network_log 
-			WHERE 
-				interface = '".substr($p['intf'],0,-9)."' 
-				AND time>=DATE_ADD(NOW(), INTERVAL - 3 HOUR)";
-		$_db = $this->db->query($sql)->result_array();
-		$res = array();
-		foreach($_db as $_row){
-			//$res[] = array($_row['y'],intval($_row['x']));
-			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
-			$res[] = $_row;
-		}
-		return $res;
-	}
+	// function getBandwidthDataMax_Last3Hours($p){
+	// 	$sql = "
+	// 		SELECT
+	// 			UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
+	// 			-- DATE_FORMAT(time,'%Y-%m-%d %H:%i:00') AS 'x', 
+	// 			DATE_FORMAT(time,'%Y-%m-%d %H:%i') AS `name`,
+	// 			rx AS `y`
+	// 		FROM 
+	// 			network_log 
+	// 		WHERE 
+	// 			interface = '".substr($p['intf'],0,-9)."' 
+	// 			AND time>=DATE_ADD(NOW(), INTERVAL - 3 HOUR)";
+	// 	$_db = $this->db->query($sql)->result_array();
+	// 	$res = array();
+	// 	foreach($_db as $_row){
+	// 		//$res[] = array($_row['y'],intval($_row['x']));
+	// 		$_row['x'] = intval($_row['x']);
+	// 		$_row['y'] = intval($_row['y']);
+	// 		$res[] = $_row;
+	// 	}
+	// 	return $res;
+	// }
 
-	function getBandwidthDataMax_Last6Hours($p){
-		$sql = "
-			SELECT
-				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
-				-- DATE_FORMAT(time,'%Y-%m-%d %H:%i:00') AS 'x', 
-				DATE_FORMAT(time,'%Y-%m-%d %H:%i') AS `name`,
-				rx AS `y`
-			FROM 
-				network_log 
-			WHERE 
-				interface = '".substr($p['intf'],0,-9)."' 
-				AND time>=DATE_ADD(NOW(), INTERVAL - 6 HOUR)";
-		$_db = $this->db->query($sql)->result_array();
-		$res = array();
-		foreach($_db as $_row){
-			//$res[] = array($_row['y'],intval($_row['x']));
-			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
-			$res[] = $_row;
-		}
-		return $res;
-	}
+	// function getBandwidthDataMax_Last6Hours($p){
+	// 	$sql = "
+	// 		SELECT
+	// 			UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
+	// 			-- DATE_FORMAT(time,'%Y-%m-%d %H:%i:00') AS 'x', 
+	// 			DATE_FORMAT(time,'%Y-%m-%d %H:%i') AS `name`,
+	// 			rx AS `y`
+	// 		FROM 
+	// 			network_log 
+	// 		WHERE 
+	// 			interface = '".substr($p['intf'],0,-9)."' 
+	// 			AND time>=DATE_ADD(NOW(), INTERVAL - 6 HOUR)";
+	// 	$_db = $this->db->query($sql)->result_array();
+	// 	$res = array();
+	// 	foreach($_db as $_row){
+	// 		//$res[] = array($_row['y'],intval($_row['x']));
+	// 		$_row['x'] = intval($_row['x']);
+	// 		$_row['y'] = intval($_row['y']);
+	// 		$res[] = $_row;
+	// 	}
+	// 	return $res;
+	// }
 
-	function getBandwidthDataMax_Interval($p,$interval){
-		$sql = "
-			SELECT
-				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
-				DATE_FORMAT(AVG(time),'%Y-%m-%d %H:%i') AS `name`,
-				AVG(rx)  AS `y`
-			FROM 
-				network_log
-			WHERE
-				interface = '".substr($p['intf'],0,-9)."' 
-				AND time>='".$p['time']['start']."' 
-				AND time <= '".$p['time']['end']."'
-			GROUP BY
-				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) DIV ".$interval;
-		$_db = $this->db->query($sql)->result_array();
-		$res = array();
-		foreach($_db as $_row){
-			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
-			$res[] = $_row;
-		}
-		return $res;
-	}
+	// function getBandwidthDataMax_Interval($p,$interval){
+	// 	$sql = "
+	// 		SELECT
+	// 			UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
+	// 			DATE_FORMAT(AVG(time),'%Y-%m-%d %H:%i') AS `name`,
+	// 			AVG(rx)  AS `y`
+	// 		FROM 
+	// 			network_log
+	// 		WHERE
+	// 			interface = '".substr($p['intf'],0,-9)."' 
+	// 			AND time>='".$p['time']['start']."' 
+	// 			AND time <= '".$p['time']['end']."'
+	// 		GROUP BY
+	// 			UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) DIV ".$interval;
+	// 	$_db = $this->db->query($sql)->result_array();
+	// 	$res = array();
+	// 	foreach($_db as $_row){
+	// 		$_row['x'] = intval($_row['x']);
+	// 		$_row['y'] = intval($_row['y']);
+	// 		$res[] = $_row;
+	// 	}
+	// 	return $res;
+	// }
 
-	function getBandwidthDataMin($p){
+	function getBandwidthDataUpload($p){
 		$sql = "
 			SELECT
 				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x', 
@@ -278,13 +282,13 @@ class Statistic_Model extends CI_Model {
 
 		foreach($_db as $_row){
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
 	}
 
-	function getBandwidthDataMin_Last3Hours($p){
+	function getBandwidthDataUpload_Last3Hours($p){
 		$sql = "
 			SELECT
 				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x',
@@ -301,13 +305,13 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
 	}
 
-	function getBandwidthDataMin_Last6Hours($p){
+	function getBandwidthDataUpload_Last6Hours($p){
 		$sql = "
 			SELECT
 				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x',
@@ -324,13 +328,13 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
 	}
 
-	function getBandwidthDataMin_Interval($p,$interval){
+	function getBandwidthDataUpload_Interval($p,$interval){
 		$sql = "
 			SELECT
 				UNIX_TIMESTAMP(DATE_FORMAT(time,'%Y-%m-%d %H:%i:00')) * 1000 AS 'x',
@@ -349,7 +353,7 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -493,7 +497,7 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -516,7 +520,7 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -539,7 +543,7 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -563,7 +567,7 @@ class Statistic_Model extends CI_Model {
 		$res = array();
 		foreach($_db as $_row){
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -587,7 +591,7 @@ class Statistic_Model extends CI_Model {
 		$res = array();
 		foreach($_db as $_row){
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -610,7 +614,7 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -633,7 +637,7 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -658,7 +662,7 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']/1000000);
+			$_row['y'] = intval($_row['y']);
 			$res[] = $_row;
 		}
 		return $res;
@@ -691,7 +695,7 @@ class Statistic_Model extends CI_Model {
 		$res = $this->db->query($sql)->row_array();
 		return $res['subtitle'];
 	}
-	
+
 	function getPingData_sub($p){
 		$sql = "SELECT
 		CONCAT(
