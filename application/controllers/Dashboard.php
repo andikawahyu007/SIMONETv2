@@ -24,8 +24,8 @@ class Dashboard extends CI_Controller {
         // }
     }
 
-    //this function for get data interface1s from databases Mysql
-    function interface1()
+    //this function for get data interfaces from databases Mysql
+    function interface()
     {
         date_default_timezone_set('Asia/Jakarta');
         $ether = $this->input->post('iface');

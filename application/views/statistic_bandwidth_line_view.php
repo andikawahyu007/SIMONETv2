@@ -92,11 +92,11 @@
 
 	var mychart = null;
 	var intf_ser = [];
-	var def_vis_on = ['CBN2 Ping Time','CBN2 Loss','Indosat Ping Time'];
+	var def_vis_on = ['iForte Max.','indosat Min.'];
 	var rep_time = [];
 	
 	function drawchart(){
-		$.post('<?php echo site_url("Statistic/getBandwidthInterfacesSeries");?>',{time:rep_time},function(data){
+		$.post('<?php echo site_url("Statistic/getBandwidthInterface");?>',{time:rep_time},function(data){
 			intf_ser = data;
 			$.each(data,function(i,v){
 				data[i].events = {
@@ -110,7 +110,7 @@
 					zoomType: 'xy'
 				},
 				title: {
-					text: 'Max. & Min. Bandwidth Usage Statistics'
+					text: 'Max. and Min. Usage Statictic'
 				},
 				subtitle: {
 					text: 'Processsing... please wait'
@@ -145,7 +145,9 @@
 							color: Highcharts.getOptions().colors[0]
 						}
 					},
-					min : 0,
+					min : -2,
+					max : 100,
+					opposite: true,
 				}],
 				xAxis: {
 					type : 'datetime',

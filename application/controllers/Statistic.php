@@ -39,6 +39,15 @@ class Statistic extends CI_Controller {
 		echo json_encode($this->statistic->getPingData($p));
 	}
 
+    public function getBandwidthInterface(){
+        echo json_encode($this->statistic->getBandwidthInterfaceSeries($this->input->post()));
+    }
+    
+    public function getBandwidthData(){
+        $p = $this->input->post();
+        echo json_encode($this->statistic->getBandwidthData($p));
+    }
+
     public function hotspot(){
         // $data['userCount'] = $this->getUserCount();
         $this->load->view('statistic_hotspot_view');

@@ -92,7 +92,7 @@
 
 	var mychart = null;
 	var intf_ser = [];
-	var def_vis_on = ['Indosat Loss','Indosat Ping Time'];
+	var def_vis_on = ['CBN2 Ping Time','CBN2 Loss','Indosat Ping Time'];
 	var rep_time = [];
 	
 	function drawchart(){
