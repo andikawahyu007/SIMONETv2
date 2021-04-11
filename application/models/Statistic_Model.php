@@ -259,7 +259,7 @@ class Statistic_Model extends CI_Model {
 		foreach($_db as $_row){
 			//$res[] = array($_row['y'],intval($_row['x']));
 			$_row['x'] = intval($_row['x']);
-			$_row['y'] = intval($_row['y']);
+			$_row['y'] =  doubleval(number_format((double)$_row['y'] / 1000000, 2, '.', ''));
 			$res[] = $_row;
 		}
 		return $res;
