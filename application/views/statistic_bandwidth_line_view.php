@@ -145,8 +145,7 @@
 							color: Highcharts.getOptions().colors[0]
 						}
 					},
-					min : -2,
-					max : 100,
+					min : 0,
 					opposite: true,
 				}],
 				xAxis: {
