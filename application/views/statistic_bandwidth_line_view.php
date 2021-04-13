@@ -92,7 +92,7 @@
 
 	var mychart = null;
 	var intf_ser = [];
-	var def_vis_on = ['iForte Max.','indosat Min.'];
+	var def_vis_on = ['indosat Upload','indosat Download'];
 	var rep_time = [];
 	
 	function drawchart(){
@@ -110,7 +110,7 @@
 					zoomType: 'xy'
 				},
 				title: {
-					text: 'Max. and Min. Usage Statictic'
+					text: 'Upload and Download Statictics'
 				},
 				subtitle: {
 					text: 'Processsing... please wait'
