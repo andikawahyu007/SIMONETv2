@@ -24,6 +24,14 @@ class Dashboard extends CI_Controller {
         // }
     }
 
+    public function dashboard1(){
+        $this->load->view('dashboard_view');
+    }
+
+    public function dashboard2(){
+        $this->load->view('dashboard_view2');
+    }
+
     //this function for get data interfaces from databases Mysql
     function interface()
     {
