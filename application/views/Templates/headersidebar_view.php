@@ -115,7 +115,7 @@
         </li>
 		<li class="dropdown toolbar-icon-bg">
 			<a href="#" class="dropdown-toggle username" data-toggle="dropdown">
-				<img class="img-circle" src="<?php echo base_url('') ?>assets/img/anu.png" alt="" />
+				<img class="img-circle" src="<?php echo base_url('') ?>assets/img/avatar.png" alt="" />
 			</a>
 			<ul class="dropdown-menu userinfo arrow">
 				<li><a href="#/" data-aksi="settings"><i class="fa fa-cog"></i><span>Setting Users</span></a></li>
@@ -136,7 +136,7 @@
         <div class="widget-body">
             <div class="userinfo">
                 <div class="avatar">
-                    <img src="<?php echo base_url('') ?>assets/img/anu.png" class="img-responsive img-circle"> 
+                    <img src="<?php echo base_url('') ?>assets/img/avatar.png" class="img-responsive img-circle"> 
                 </div>
                 <div class="info">
                     <span class="username">Alexander Anu</span>
@@ -149,7 +149,12 @@
 							<nav role="navigation" class="widget-body">
 								<ul class="acc-menu">
 									<li class="nav-separator"><span>Explore</span></li>
-									<li><a href="<?php echo site_url('dashboard'); ?>"><i class="ti ti-home"></i><span>Dashboard</span></a></li>	
+									<li><a href="javascript:;"><i class="ti ti-home" style="bold"></i><span>Dashboard</span></a>
+                                        <ul class="acc-menu">
+												<li><a href="<?php echo site_url('dashboard/dashboard1'); ?>">Dashboard 1</a></li>
+												<li><a href="<?php echo site_url('dashboard/dashboard2'); ?>">Dashboard 2</a></li>
+                                        </ul>
+                                    </li>
 									<li><a href="<?php echo site_url('interfaces'); ?>"><i class="ti ti-image"></i><span>Interfaces</span></a></li>	
 									<li><a href="<?php echo site_url('devices'); ?>"><i class="ti ti-harddrive"></i><span>Devices</span></a></li>	
 									<li><a href="<?php echo site_url('topology'); ?>"><i class="ti ti-map"></i><span>Topology</span></a></li>	

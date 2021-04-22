@@ -7,7 +7,7 @@
     <div class="static-content-wrapper">
         <div class="static-content">
             <div class="page-content">
-                <div class="container-fluid" style="margin-top: 10px">
+                <div class="container-fluid" style="margin-top: 20px">
                     <!-- <div data-widget-group="group1"> -->
                         <div class="row">
                             <div class="col-md-12">
@@ -27,15 +27,15 @@
                                     </div>
                                     <div class="panel-body" id="divPrint">
 										<div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> Indosat Ping To google.com</h5>
-                                                <div class="mychartQuality" id="quality1" style="height: 350px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
+                                            <div style="margin: -15px 20px 0px 20px">
+                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  Indosat Ping To google.com</h5>
+                                                <div class="mychartQuality" id="quality1" style="height: 250px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
                                             </div>
                                         </div>
 										<div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> iForte Dedicated Ping To google.com</h5>
-                                                <div class="mychartQuality" id="quality2" style="height: 350px;" class="mt-sm mb-sm" data-interface="iForte"></div>
+                                            <div style="margin: -15px 20px 0px 20px">
+                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  iForte Dedicated Ping To google.com</h5>
+                                                <div class="mychartQuality" id="quality2" style="height: 250px;" class="mt-sm mb-sm" data-interface="iForte"></div>
                                             </div>
                                         </div>
                                     </div>                               
@@ -62,15 +62,15 @@
                                     <div class="panel-body">
 
                                     <div class="row">
-                                        <div style="margin: 10px">
-                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i> Indosat</h5>
-                                            <div class="mychartInterface" id="chart1" style="height: 350px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
+                                        <div style="margin: -15px 20px 0px 20px">
+                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  Indosat</h5>
+                                            <div class="mychartInterface" id="chart1" style="height: 250px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
                                         </div>
                                     </div>
 									<div class="row">
-                                        <div style="margin: 10px">
-                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i> iForte</h5>
-                                            <div class="mychartInterface" id="chart5" style="height: 350px;" class="mt-sm mb-sm" data-interface="iForte"></div>
+                                        <div style="margin: -15px 20px 0px 20px">
+                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  iForte</h5>
+                                            <div class="mychartInterface" id="chart5" style="height: 250px;" class="mt-sm mb-sm" data-interface="iForte"></div>
                                         </div>
                                     </div>
                                     </div>
@@ -365,7 +365,7 @@
 					}
 					
 					// return this.name + '<br>Max: ' + maxTx + '<br>Min:  <br>Avg: ' + avgTx;
-					return this.name + 'Loss Color : <span style="color: #2ecc71;">&#9724;</span> 0	<span style="color: #3498db;">&#9724;</span> 1/20	<span style="color: #3355FF;">&#9724;</span> 2/20	<span style="color: #8333FF;">&#9724;</span> 4/20	<span style="color: #8E44AD;">&#9724;</span> 10/20	<span style="color: #E74C3C;">&#9724;</span> 19/20 <br>';
+					return this.name + ' Loss Color : <span style="color: #2ecc71;">&#9724;</span> 0	<span style="color: #3498db;">&#9724;</span> 1/20	<span style="color: #3355FF;">&#9724;</span> 2/20	<span style="color: #8333FF;">&#9724;</span> 4/20	<span style="color: #8E44AD;">&#9724;</span> 10/20	<span style="color: #E74C3C;">&#9724;</span> 19/20 <br>';
 					},
 			},
 			tooltip: {
@@ -496,14 +496,14 @@
 				enabled: true
 			},
 			series: [{
+				color: '#3498db',
 				name: 'Upload',
 				data: [],
-				color: '#3498db',
 				marker: {enabled: false}
 			}, {
+				color: '#2ecc71',
 				name: 'Download',
 				data: [],
-				color: '#2ecc71',
 				marker: {enabled: false}
 			}],
 		})

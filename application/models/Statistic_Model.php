@@ -43,7 +43,7 @@ class Statistic_Model extends CI_Model {
     }
 
     function getBandwidthInterfaceSeries($p){
-		$sql = "SELECT DISTINCT interface FROM network_log WHERE time>='".$p['time']['start']."' AND time <= '".$p['time']['end']."' ORDER BY interface";
+		$sql = "SELECT DISTINCT interface FROM network_log WHERE time>='".$p['time']['start']."' AND time <= '".$p['time']['end']."' ORDER BY interface ";
 		$db = $this->db->query($sql)->result_array();
 		
 		$res = array();
@@ -51,14 +51,14 @@ class Statistic_Model extends CI_Model {
 			$res[] = array(
 				'name'=>$row['interface'].' Download',
 				'data'=>array(),
-				'type'=>'spline',
+				'type'=>'areaspline',
 				'yAxis' => 1,
 				'tooltip'=> array('valueSuffix' => ' Mb'),
 			);
 			$res[] = array(
 				'name'=>$row['interface'].' Upload',
 				'data'=>array(),
-				'type'=>'spline',
+				'type'=>'areaspline',
 				'yAxis' => 0,
 				'tooltip'=> array('valueSuffix' => ' Mb')
 			);
@@ -67,7 +67,31 @@ class Statistic_Model extends CI_Model {
 	}
 
 	function getPingInterfaceSeries($p){
-		$sql = "SELECT DISTINCT interface FROM network_quality_log WHERE time>='".$p['time']['start']."' AND time <= '".$p['time']['end']."' ORDER BY interface";
+		$sql = "SELECT DISTINCT interface FROM network_quality_log WHERE time>='".$p['time']['start']."' AND time <= '".$p['time']['end']."' ORDER BY interface ";
+		$db = $this->db->query($sql)->result_array();
+		
+		$res = array();
+		foreach($db as $row){
+			$res[] = array(
+				'name'=>$row['interface'].' Loss',
+				'data'=>array(),
+				'type'=>'column',
+				'yAxis' => 1,
+				'tooltip'=> array('valueSuffix' => ' %'),
+			);
+			$res[] = array(
+				'name'=>$row['interface'].' Ping Time',
+				'data'=>array(),
+				'type'=>'spline',
+				'yAxis' => 0,
+				'tooltip'=> array('valueSuffix' => ' ms')
+			);
+		}
+		return $res;
+	}
+
+	function getPingInterfaceDashboard($p){
+		$sql = "SELECT DISTINCT interface FROM network_quality_log WHERE time>='".$p['time']['start']."' AND time <= '".$p['time']['end']."' AND interface IN ('indosat', 'iForte') ORDER BY interface ";
 		$db = $this->db->query($sql)->result_array();
 		
 		$res = array();
@@ -129,8 +153,8 @@ class Statistic_Model extends CI_Model {
 				); else
 				if(substr($p['intf'],-8) == 'Download')
 				return array(
-					'subtitle' => 'Last 6 hours - '.$this->getBandwidthData_subLast3Hours(),
-					'data' => $this->getBandwidthDataDownload_Last3Hours($p),
+					'subtitle' => 'Last 6 hours - '.$this->getBandwidthData_subLast6Hours(),
+					'data' => $this->getBandwidthDataDownload_Last6Hours($p),
 				);
 			else return false;
 		}

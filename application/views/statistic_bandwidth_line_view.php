@@ -6,7 +6,7 @@
     <div class="static-content-wrapper">
         <div class="static-content">
             <div class="page-content">
-                <div class="container-fluid" style="margin-top: 10px">
+                <div class="container-fluid" style="margin-top: 20px">
                     <!-- <div data-widget-group="group1"> -->
                         <div class="row">
                             <div class="col-md-12">
@@ -19,7 +19,6 @@
 												<span></span> <b class="caret"></b>
 											</button>											
 										</div>
-										
 										<div class="btn-group pull-right" id="button-table" role="group" aria-label="Basic example">
 										<a type="button" class="btn btn-success" data-aksi="refresh" style="margin:10px 0 0 0px"><i class="fa fa-refresh"></i></a>
 											<a type="button" class="btn btn-success" data-aksi="print" style="margin:10px 0 0 0px"><i class="fa fa-print"></i></a>  
@@ -27,10 +26,15 @@
                                     </div>
                                     <div class="panel-body" id="divPrint">
 										<div class="row">
-                                            <div style="margin: 10px">
+                                            <div style="margin: -15px 20px 0px 20px">
                                                 <h5><i class="fa fa-circle" style="color: #5cb85c"></i></h5>
-                                                <div class="mychartQuality" id="quality1" style="height: 600px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
+                                                <div class="mychartQuality" id="quality1" style="height: 400px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
                                             </div>
+                                            <div class="row">
+                                            <div style="margin: 0px 40px 0px 40px">
+                                                <div class="mychartQuality" id="quality1" style="height: 150px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +62,7 @@
             $(this).siblings(".select2-container").css('border', '1px solid #e3e3e3;');
         });
 		
-		//drawchart();
+		//drawBandwidthchart();
 		$('#reportrange span').html(moment().subtract('days', 30).format('D MMMM YYYY') + ' - ' + moment().format('D MMMM YYYY'));
     })
 	var startDate;
@@ -95,13 +99,13 @@
 	var def_vis_on = ['indosat Upload','indosat Download'];
 	var rep_time = [];
 	
-	function drawchart(){
+	function drawBandwidthchart(){
 		$.post('<?php echo site_url("Statistic/getBandwidthInterface");?>',{time:rep_time},function(data){
 			intf_ser = data;
 			$.each(data,function(i,v){
 				data[i].events = {
 					legendItemClick : function(e){
-						getchartdata(i, true);
+						getBandwidthchartdata(i, true);
 					}
 				}
 			});
@@ -190,16 +194,16 @@
 					}
 				})
 			})
-			getchartdata();
+			getBandwidthchartdata();
 		},'json');
 	}
 	var clsTime;
-	function getchartdata(intf_i = 0,ignoreVisible = false){
+	function getBandwidthchartdata(intf_i = 0,ignoreVisible = false){
 		if(!mychart.series[intf_i].visible && !ignoreVisible){
-			if(typeof intf_ser[intf_i+1] != 'undefined') getchartdata(intf_i+1);
+			if(typeof intf_ser[intf_i+1] != 'undefined') getBandwidthchartdata(intf_i+1);
 			else{
 				clearTimeout(clsTime);
-				clsTime = setTimeout(function(){ getchartdata(); }, 1000 * 60);
+				clsTime = setTimeout(function(){ getBandwidthchartdata(); }, 1000 * 60);
 			}
 			return false;
 		}
@@ -212,10 +216,10 @@
 				mychart.series[intf_i].hide();
 			}
 			mychart.subtitle.update({text:data.subtitle});
-			if(typeof intf_ser[intf_i+1] != 'undefined') getchartdata(intf_i+1);
+			if(typeof intf_ser[intf_i+1] != 'undefined') getBandwidthchartdata(intf_i+1);
 			else{
 				clearTimeout(clsTime);
-				clsTime = setTimeout(function(){ getchartdata(); }, 1000 * 60);
+				clsTime = setTimeout(function(){ getBandwidthchartdata(); }, 1000 * 60);
 			}
 		},'json');
 	}
@@ -251,8 +255,9 @@
 		endDate = end;
 		
 		rep_time = date;
-		drawchart();
+		drawBandwidthchart();
 	});
+
 </script>
 
 </body>

@@ -27,17 +27,17 @@
                                     <div class="panel-body">
 
                                     <div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> Indosat</h5>
-                                                <div class="mychartInterface" id="chart1" style="height: 350px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
-                                            </div>
+                                        <div style="margin: 10px">
+                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i> Indosat</h5>
+                                            <div class="mychartInterface" id="chart1" style="height: 350px;" class="mt-sm mb-sm" data-interface="Indosat"></div>
                                         </div>
-					<div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> iForte</h5>
-                                                <div class="mychartInterface" id="chart5" style="height: 350px;" class="mt-sm mb-sm" data-interface="iForte"></div>
-                                            </div>
+                                    </div>
+									<div class="row">
+                                        <div style="margin: 10px">
+                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i> iForte</h5>
+                                            <div class="mychartInterface" id="chart5" style="height: 350px;" class="mt-sm mb-sm" data-interface="iForte"></div>
                                         </div>
+                                    </div>
                                         <!-- <div class="row">
                                             <div style="margin: 10px">
                                                 <h5><i class="fa fa-circle" style="color: #5cb85c"></i> CBN 1</h5>
@@ -338,7 +338,7 @@
 
 					$.each(this.points, function(i, point) {
 						var bytes = point.y;                          
-						var sizes = ['b/s', 'kb/s', 'Mb/s', 'Gb/s', 'Tb/s'];
+						var sizes = ['b/s', 'Kb/s', 'Mb/s', 'Gb/s', 'Tb/s'];
 						if (bytes == 0) {s.push('<span style="color:#D31B22;font-weight:bold;">'+ point.series.name +' : '+
 							'0 b/s'+'<span>');}
 						else{

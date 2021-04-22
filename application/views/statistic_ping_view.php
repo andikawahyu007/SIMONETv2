@@ -18,15 +18,7 @@
 												<i class="ti ti-calendar"></i> 
 												<span></span> <b class="caret"></b>
 											</button>
-											<button id="coba">coba</button>
 										</div>
-																				
-										<div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-											<i class="fa fa-calendar"></i>&nbsp;
-											<span></span> <i class="fa fa-caret-down"></i>
-										</div>
-										
-										
 										<div class="btn-group pull-right" id="button-table" role="group" aria-label="Basic example">
 										<a type="button" class="btn btn-success" data-aksi="refresh" style="margin:10px 0 0 0px"><i class="fa fa-refresh"></i></a>
 											<a type="button" class="btn btn-success" data-aksi="print" style="margin:10px 0 0 0px"><i class="fa fa-print"></i></a>  
@@ -41,38 +33,8 @@
                                         </div>
 										<div class="row">
                                             <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> CBN Dedicated Ping To google.com</h5>
-                                                <div class="mychartQuality" id="quality5" style="height: 350px;" class="mt-sm mb-sm" data-interface="CBNDedicated"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> CBN 1 Ping To google.com</h5>
-                                                <div class="mychartQuality" id="quality6" style="height: 350px;" class="mt-sm mb-sm" data-interface="CBN1"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> CBN 2 Ping To google.com</h5>
-                                                <div class="mychartQuality" id="quality7" style="height: 350px;" class="mt-sm mb-sm" data-interface="CBN2"></div>
-                                            </div>
-                                        </div>
-										<div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> MyRepublic Pro 100 Ping To google.com</h5>
-                                                <div class="mychartQuality" id="quality2" style="height: 350px;" class="mt-sm mb-sm" data-interface="BPro100"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> MyRepublic 300 Ping To google.com</h5>
-                                                <div class="mychartQuality" id="quality3" style="height: 350px;" class="mt-sm mb-sm" data-interface="B300"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div style="margin: 10px">
-                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> MyRepublic 100 Ping To google.com</h5>
-                                                <div class="mychartQuality" id="quality4" style="height: 350px;" class="mt-sm mb-sm" data-interface="B100"></div>
+                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i> iForte Dedicated Ping To google.com</h5>
+                                                <div class="mychartQuality" id="quality2" style="height: 350px;" class="mt-sm mb-sm" data-interface="iForte"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -100,65 +62,6 @@
         $(".select-device").each(function() {
             $(this).siblings(".select2-container").css('border', '1px solid #e3e3e3;');
         });
-		
-		// setInterval(page_refresh, 10000 ); //NOTE: period is passed in milliseconds 1*60000
-		/*setInterval(function() {
-			window.location.reload();
-		}, 2*60000); 
-		*/
-		
-	   $('#reportrange').daterangepicker(
-       {
-          startDate: moment().subtract('days', 29),
-          endDate: moment(),
-          minDate: '01/01/2012',
-          maxDate: '12/31/2014',
-          dateLimit: { days: 60 },
-          showDropdowns: true,
-          showWeekNumbers: true,
-          timePicker: false,
-          timePickerIncrement: 1,
-          timePicker12Hour: true,
-          ranges: {
-             'Today': [moment(), moment()],
-             'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-             'Last 7 Days': [moment().subtract('days', 6), moment()],
-             'Last 30 Days': [moment().subtract('days', 29), moment()],
-             'This Month': [moment().startOf('month'), moment().endOf('month')],
-             'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-          },
-          opens: 'left',
-          buttonClasses: ['btn btn-default'],
-          applyClass: 'btn-small btn-primary',
-          cancelClass: 'btn-small',
-          format: 'DD/MM/YYYY',
-          separator: ' to ',
-          locale: {
-              applyLabel: 'Submit',
-              fromLabel: 'From',
-              toLabel: 'To',
-              customRangeLabel: 'Custom Range',
-              daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
-              monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-              firstDay: 1
-          }
-       },
-       function(start, end) {
-        console.log("menjalankan callback ...");
-        $('#reportrange span').html(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
-        startDate = start;
-         endDate = end;    
-
-       }
-    );		
-		
-	
-    $('#reportrange span').html(moment().subtract('days', 30).format('D MMMM YYYY') + ' - ' + moment().format('D MMMM YYYY'));
-
-    $('#cmdcoba').click(function(){
-        console.log(startDate.format('D MMMM YYYY') + ' - ' + endDate.format('D MMMM YYYY'));
-    });		
-		
     })
 	var charts = {};
 	// var chart;
@@ -166,9 +69,6 @@
 	// var chartQuality;
 	var chartsResource = {};
 	// var chartResource;
-	
-	var startDate;
-	var endDate;
 
 	$('body').on('click','a[data-aksi="print"]',function(){
         // $("#divPrint").show();  
@@ -225,13 +125,7 @@
 
 			$('.highcharts-credits').hide();
 			
-			startDate = start;
-			endDate = end;
 	});
-	
-	$('#coba').click(function(){
-        console.log(startDate.format('D MMMM YYYY') + ' - ' + endDate.format('D MMMM YYYY'));
-    });
 
 	function convertBit(value){
 		var bits = value;                          
@@ -406,8 +300,7 @@
 					return this.name + '<br> Rtt : Avg: ' + avgPing + ', Max: ' + maxPing + ', Min: ' + minPing + ' <br>'+
 					'Jitter : Avg: ' + avgJitter + ', Max: ' + maxJitter + ', Min: ' + minJitter + ' <br>'+ 
 					'Loss : Avg: ' + avgLoss + ' %, Max: ' + maxLoss + ' %, Min: ' + minLoss + ' %<br>'+
-					'Loss Color : <span style="color: #2ecc71;">&#9724;</span> 0	<span style="color: #3498db;">&#9724;</span> 1/20	<span style="color: #3355FF;">&#9724;</span> 2/20	<span style="color: #8333FF;">&#9724;</span> 4/20	<span style="color: #8E44AD;">&#9724;</span> 10/20	<span style="color: #E74C3C;">&#9724;</span> 19/20 <br>' +
-					'Probe : 20 Icmp Echo Ping (56 byte) every minutes';
+					'Loss Color : <span style="color: #2ecc71;">&#9724;</span> 0	<span style="color: #3498db;">&#9724;</span> 1/20	<span style="color: #3355FF;">&#9724;</span> 2/20	<span style="color: #8333FF;">&#9724;</span> 4/20	<span style="color: #8E44AD;">&#9724;</span> 10/20	<span style="color: #E74C3C;">&#9724;</span> 19/20 <br>';
 					},
 			},
 			tooltip: {
