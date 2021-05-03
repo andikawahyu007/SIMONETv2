@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '10.10.10.115',
+	'hostname' => '10.10.10.31',
 	'username' => 'simonet',
-	'password' => 'simonet1234',
+	'password' => 'simonet@20!(',
 	'database' => 'simonetDB',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

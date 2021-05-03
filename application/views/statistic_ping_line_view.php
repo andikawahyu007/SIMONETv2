@@ -136,13 +136,13 @@
 					title: {
 						text: 'Loss',
 						style: {
-							color: Highcharts.getOptions().colors[0]
+							color: Highcharts.getOptions().colors[8]
 						}
 					},
 					labels: {
 						format: '{value}',
 						style: {
-							color: Highcharts.getOptions().colors[0]
+							color: Highcharts.getOptions().colors[8]
 						}
 					},
 					min : 0,
