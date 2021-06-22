@@ -21,7 +21,7 @@
 										</div>
 										<div class="btn-group pull-right" id="button-table" role="group" aria-label="Basic example">
 										<a type="button" class="btn btn-success" data-aksi="refresh" style="margin:10px 0 0 0px"><i class="fa fa-refresh"></i></a>
-											<a type="button" class="btn btn-success" data-aksi="print" style="margin:10px 0 0 0px"><i class="fa fa-print"></i></a>  
+											<a type="button" class="btn btn-success" onclick='printDiv();' style="margin:10px 0 0 0px"><i class="fa fa-print"></i></a>  
 										</div>
                                     </div>
                                     <div class="panel-body" id="divPrint">

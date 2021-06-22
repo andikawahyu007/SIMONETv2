@@ -171,6 +171,7 @@
 												<li><a href="<?php echo site_url('hotspot/userhotspot'); ?>">User Hotspot</a></li>
 												<li><a href="<?php echo site_url('hotspot/userprofile'); ?>">User Profile</a></li>
 												<li><a href="<?php echo site_url('hotspot/useractive'); ?>">User Active</a></li>
+												<li><a href="<?php echo site_url('hotspot/userpath'); ?>">User Trace</a></li>
                                         </ul>
 									</li>
                                     <li><a href="javascript:;" data-aksi="log"><i class="ti ti-notepad"></i>Log Activity</span></a></li>

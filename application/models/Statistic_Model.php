@@ -91,7 +91,7 @@ class Statistic_Model extends CI_Model {
 	}
 
 	function getPingInterfaceDashboard($p){
-		$sql = "SELECT DISTINCT interface FROM network_quality_log WHERE time>='".$p['time']['start']."' AND time <= '".$p['time']['end']."' AND interface IN ('indosat', 'iForte') ORDER BY interface ";
+		$sql = "SELECT DISTINCT interface FROM network_quality_log WHERE time>='".$p['time']['start']."' AND time <= '".$p['time']['end']."' ORDER BY interface ";
 		$db = $this->db->query($sql)->result_array();
 		
 		$res = array();

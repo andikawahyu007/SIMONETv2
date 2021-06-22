@@ -22,7 +22,7 @@
 										</div>
 										<div class="btn-group pull-right" id="button-table" role="group" aria-label="Basic example">
 										<a type="button" class="btn btn-success" data-aksi="refresh" style="margin:10px 0 0 0px"><i class="fa fa-refresh"></i></a>
-											<a type="button" class="btn btn-success" data-aksi="print" style="margin:10px 0 0 0px"><i class="fa fa-print"></i></a>  
+											<a type="button" class="btn btn-success" onclick='printDiv();' style="margin:10px 0 0 0px"><i class="fa fa-print"></i></a>  
 										</div>
                                     </div>
                                     <div class="panel-body" id="divPrint">
@@ -36,6 +36,24 @@
                                             <div style="margin: -15px 20px 0px 20px">
                                                 <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  iForte Dedicated Ping To google.com</h5>
                                                 <div class="mychartQuality" id="quality2" style="height: 250px;" class="mt-sm mb-sm" data-interface="iForte"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div style="margin: -15px 20px 0px 20px">
+                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  MNC 1 Ping To google.com</h5>
+                                                <div class="mychartQuality" id="quality3" style="height: 250px;" class="mt-sm mb-sm" data-interface="prov3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div style="margin: -15px 20px 0px 20px">
+                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  MNC 2 Ping To google.com</h5>
+                                                <div class="mychartQuality" id="quality4" style="height: 250px;" class="mt-sm mb-sm" data-interface="prov4"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div style="margin: -15px 20px 0px 20px">
+                                                <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  MNC 3 Ping To google.com</h5>
+                                                <div class="mychartQuality" id="quality5" style="height: 250px;" class="mt-sm mb-sm" data-interface="prov5"></div>
                                             </div>
                                         </div>
                                     </div>                               
@@ -56,10 +74,10 @@
 										</div>
 										<div class="btn-group pull-right" id="button-table" role="group" aria-label="Basic example">
 										<a type="button" class="btn btn-success" data-aksi="refresh" style="margin:10px 0 0 0px"><i class="fa fa-refresh"></i></a>
-											<a type="button" class="btn btn-success" data-aksi="print" style="margin:10px 0 0 0px"><i class="fa fa-print"></i></a>  
+											<a type="button" class="btn btn-success" onclick='printDiv2();' style="margin:10px 0 0 0px"><i class="fa fa-print"></i></a>  
 										</div>
                                     </div>
-                                    <div class="panel-body">
+                                    <div class="panel-body" id="divPrint2">
 
                                     <div class="row">
                                         <div style="margin: -15px 20px 0px 20px">
@@ -70,7 +88,25 @@
 									<div class="row">
                                         <div style="margin: -15px 20px 0px 20px">
                                             <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  iForte</h5>
-                                            <div class="mychartInterface" id="chart5" style="height: 250px;" class="mt-sm mb-sm" data-interface="iForte"></div>
+                                            <div class="mychartInterface" id="chart2" style="height: 250px;" class="mt-sm mb-sm" data-interface="iForte"></div>
+                                        </div>
+                                    </div>
+									<div class="row">
+                                        <div style="margin: -15px 20px 0px 20px">
+                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  MNC 1</h5>
+                                            <div class="mychartInterface" id="chart3" style="height: 250px;" class="mt-sm mb-sm" data-interface="prov3"></div>
+                                        </div>
+                                    </div>
+									<div class="row">
+                                        <div style="margin: -15px 20px 0px 20px">
+                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  MNC 2</h5>
+                                            <div class="mychartInterface" id="chart4" style="height: 250px;" class="mt-sm mb-sm" data-interface="prov4"></div>
+                                        </div>
+                                    </div>
+									<div class="row">
+                                        <div style="margin: -15px 20px 0px 20px">
+                                            <h5><i class="fa fa-circle" style="color: #5cb85c"></i>  MNC 3</h5>
+                                            <div class="mychartInterface" id="chart5" style="height: 250px;" class="mt-sm mb-sm" data-interface="prov5"></div>
                                         </div>
                                     </div>
                                     </div>
@@ -114,6 +150,20 @@
 
 	function printDiv(){
 		var divToPrint=document.getElementById('divPrint');
+
+		var newWin=window.open('','Print-Window');
+
+		newWin.document.open();
+
+		newWin.document.write('<html><body onload="window.print()"><h2 style="text-align:center">Statistic</h2>'+divToPrint.innerHTML+'</body></html>');
+
+		newWin.document.close();
+
+		setTimeout(function(){newWin.close();},10);
+	}
+
+	function printDiv2(){
+		var divToPrint=document.getElementById('divPrint2');
 
 		var newWin=window.open('','Print-Window');
 

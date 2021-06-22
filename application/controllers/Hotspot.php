@@ -334,6 +334,11 @@ class Hotspot extends CI_Controller {
         $this->load->view('user_aktif_view');
     }
 
+    public function userPath(){
+        // function untuk menampilkan halaman user active
+        $this->load->view('user_aktif_view');
+    }
+
     function userActiveJSON(){
         // function untuk mengget semua data user active dari Mikrotik
         try{
