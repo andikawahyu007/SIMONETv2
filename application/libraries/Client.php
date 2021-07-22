@@ -24,13 +24,13 @@ class Client
     /**
      * private properties
      */
-    protected $baseurl            = 'https://127.0.0.1:8443';
-    protected $user               = '';
-    protected $password           = '';
-    protected $site               = 'default';
-    protected $version            = '5.6.39';
+    protected $baseurl            = 'https://114.4.32.190:8443';
+    protected $user               = 'ubnt';
+    protected $password           = 'ubnt20!(';
+    protected $site               = '3pp0jtfi';
+    protected $version            = '5.13.32';
     protected $debug              = false;
-    protected $is_loggedin        = false;
+    public $is_loggedin        = false;
     private $cookies              = '';
     private $request_type         = 'POST';
     private $connect_timeout      = 10;

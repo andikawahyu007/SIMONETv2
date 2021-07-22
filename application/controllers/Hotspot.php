@@ -2,8 +2,16 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+set_include_path(get_include_path() . PATH_SEPARATOR . APPPATH . 'third_party/phpseclib');
+include(APPPATH . '/third_party/phpseclib/Net/SSH2.php');
+
+require_once('application/libraries/Client.php');
+require_once('application/libraries/ZukoLibs.php');
+
 class Hotspot extends CI_Controller {
 
+public $ip_router = "10.10.10.1";
+public $ip_unifi = "10.10.10.43";
     
     public function __construct()
     {
@@ -45,7 +53,7 @@ class Hotspot extends CI_Controller {
         $user = $this->devices->getUserRouter(array('id' => '1111'));
         $api->port = $user['port'];
         $_read = array();
-        if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+        if($api->connect($this->ip_router,$user['username'],$user['password'])){
             $api->write('/ip/hotspot/user/print');
             $data = $api->read();
             $api->disconnect();
@@ -84,7 +92,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/add',false);
 			    $api->write('=name='.$data['name'], false );
 			    $api->write('=password='.$data['password'], false );
@@ -123,7 +131,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/set',false);
 			    $api->write('=.id='.$data['id'],false);
 			    $api->write('=name='.$data['name'], false );
@@ -147,7 +155,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/remove',false);
 			    $api->write('=.id='.$id);
                 $write = $api->read();
@@ -168,7 +176,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/print');
                 $read = $api->read();
                 $api->disconnect();        
@@ -232,7 +240,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/profile/set',false);
 			    $api->write('=.id='.$data['id'],false);
 			    $api->write('=name='.$data['name'], false );
@@ -266,7 +274,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/profile/add',false);
 			    $api->write('=name='.$data['name'], false );
 			    $api->write('=session-timeout='.$data['session_timeout'], false );
@@ -292,7 +300,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/profile/remove',false);
 			    $api->write('=.id='.$id);
                 $write = $api->read();
@@ -313,7 +321,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/profile/print');
                 $read = $api->read();
                 $api->disconnect();
@@ -334,10 +342,11 @@ class Hotspot extends CI_Controller {
         $this->load->view('user_aktif_view');
     }
 
-    public function userPath(){
-        // function untuk menampilkan halaman user active
-        $this->load->view('user_aktif_view');
+    public function userTrack(){
+        // function untuk menampilkan halaman lokasi user
+        $this->load->view('user_track_view');
     }
+
 
     function userActiveJSON(){
         // function untuk mengget semua data user active dari Mikrotik
@@ -346,7 +355,7 @@ class Hotspot extends CI_Controller {
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
             $_read = array();
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/active/print');
                 $read = $api->read();
                 $api->disconnect();
@@ -368,6 +377,69 @@ class Hotspot extends CI_Controller {
         }
     }
 
+    function userTrackJSON(){
+        // function untuk mengget semua data lokas user active dari UNIFI
+        $api = $this->routerosapi;
+            $user = $this->devices->getUserRouter(array('id' => '1111'));
+            $api->port = $user['port'];
+            $_read = array();
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
+                $api->write('/ip/hotspot/active/print');
+                $read = $api->read();
+                $api->disconnect();
+                foreach($read as $r){
+                    $_read[$r["mac-address"]] = $r;
+                }        
+            }
+            $user_aktif = array(
+                // "draw" => $this->input->post('draw'),
+                "data" => $_read,
+            );
+            
+
+        $user = $this->devices->getUserRouter(array('id' => '3333'));
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
+        $set_debug_mode   = $unifi_connection->set_debug(false);
+        $loginresults     = $unifi_connection->login();
+        $aps_array        = $unifi_connection->list_clients();
+        $device           = $unifi_connection->list_devices();
+        
+        $_devices = array();
+        foreach($device as $d){
+            $_devices[$d->mac] = $d;
+        }
+
+        // echo json_encode($d);
+
+        $_aps_array = [];
+
+        // foreach($devices as $dvc){
+        //     if ()
+        // }
+
+        foreach($aps_array as $aps){
+            // print_r($aps);
+            // print_r($_aps_array);
+            $aps->hostname = "";
+            if (isset($aps->mac) && isset($_read[strtoupper($aps->mac)]))
+                $aps->hostname = $_read[strtoupper($aps->mac)]["user"];
+                $aps->mac = strtoupper($aps->mac);
+            if (isset($aps->ap_mac) && isset($_devices[$aps->ap_mac]))
+                $aps->ap_mac = $_devices[$aps->ap_mac]->name;
+            $_aps_array[] = $aps;
+        }
+
+        // echo json_encode($_read);
+        echo json_encode($_aps_array);
+        // echo json_encode($user_aktif);
+        // echo(json_encode($aps_array));
+
+        // var_dump($unifi_connection->is_loggedin);
+        // print_r($unifi_connection);
+        // print_r($loginresults);
+        // var_dump($aps_array);
+    }
+
     function delUserActive(){
         // funtion untuk menghapus user active di mikrotik
         $id = $this->input->post('id');
@@ -375,7 +447,7 @@ class Hotspot extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/active/remove',false);
 			    $api->write('=.id='.$id);
                 $write = $api->read();

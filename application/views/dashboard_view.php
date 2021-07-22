@@ -155,7 +155,7 @@
 
 		newWin.document.open();
 
-		newWin.document.write('<html><body onload="window.print()"><h2 style="text-align:center">Statistic</h2>'+divToPrint.innerHTML+'</body></html>');
+		newWin.document.write('<html><body onload="window.print()"><h2 style="text-align:center">Statistic Ping Quality</h2>'+divToPrint.innerHTML+'</body></html>');
 
 		newWin.document.close();
 
@@ -169,7 +169,7 @@
 
 		newWin.document.open();
 
-		newWin.document.write('<html><body onload="window.print()"><h2 style="text-align:center">Statistic</h2>'+divToPrint.innerHTML+'</body></html>');
+		newWin.document.write('	<html><body onload="window.print()"><h2 style="text-align:center">Statistic Bandwidth Usage</h2>'+divToPrint.innerHTML+'</body></html>');
 
 		newWin.document.close();
 
@@ -558,6 +558,14 @@
 			}],
 		})
 	}
+
+// $(document).ready(function(){
+// 	var refreshId = setInterval(function(){
+// 		$("#daterangepicker2").load("dashboard_view.php");
+// 	}, 60000);
+// 	$.ajaxSetup({cache: false});
+// });
+
 </script>
 
 </body>

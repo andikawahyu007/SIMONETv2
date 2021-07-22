@@ -361,9 +361,9 @@
     //     $('#upgradeUnifi').css('visibility', 'visible');   
      });
 
-    // $('body').on('click','a[data-aksi="upgradeUniFi"]',function(){
-    //     upgradeUnifis();
-    // });
+    $('body').on('click','a[data-aksi="upgradeUniFi"]',function(){
+        upgradeUnifis();
+    });
 
     $('body').on('click','a[data-aksi="refresh"]',function(){
         syncUnifi();
@@ -432,9 +432,9 @@
         addDevice();
     })
 
-    $('body').on('click','a[data-aksi="refreshMikroTik"]',function(){
-        reload_table2();
-    })
+    // $('body').on('click','a[data-aksi="refreshMikroTik"]',function(){
+    //     reload_table2();
+    // })
 
     $('body').on('click','a[data-aksi="refreshUniFi"]',function(){
         reload_table3();
@@ -486,20 +486,20 @@
     })
 
 
-    // $('table#tb_devices').on('','tbody tr',function(){
-    //     var status = $(this).find('td:eq(2)').html();
+    $('table#tb_devices').on('','tbody tr',function(){
+        var status = $(this).find('td:eq(2)').html();
 
-    //     console.log(status);
-    //     if(status == 'Disconnected'){
-    //         $(this).css("background-color", "green");
-    //     }
-    // })
+        console.log(status);
+        if(status == 'Disconnected'){
+            $(this).css("background-color", "green");
+        }
+    })
 
-    // $('table#tb_devices tbody td').map(function(){
-    //     if($this.text() === 'Disconnected') {
-    //         $(this).css("background-color", "green");
-    //     }
-    // })
+    $('table#tb_devices tbody td').map(function(){
+        if($this.text() === 'Disconnected') {
+            $(this).css("background-color", "green");
+        }
+    })
 
     function configDevice(){
         $('#form')[0].reset();

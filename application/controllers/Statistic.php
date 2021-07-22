@@ -3,6 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once('application/libraries/Client.php');
 class Statistic extends CI_Controller {
 
+
+public $ip_router = "10.10.10.1";
+public $ip_unifi = "10.10.10.43";
+
     public function __construct()
     {
         parent::__construct();
@@ -165,7 +169,7 @@ class Statistic extends CI_Controller {
 
     function getUserCountAPJSON(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_devices();
@@ -207,7 +211,7 @@ class Statistic extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/host/print');
                 $read = $api->read();
                 $api->disconnect();      
@@ -220,7 +224,7 @@ class Statistic extends CI_Controller {
 
     function getUserCountWLAN(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_devices();
@@ -248,7 +252,7 @@ class Statistic extends CI_Controller {
 
     function getUserCountSSIDJSON(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_clients();
@@ -289,7 +293,7 @@ class Statistic extends CI_Controller {
 
     function getUserCountRadioJSON(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_clients();

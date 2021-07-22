@@ -7,8 +7,11 @@ include(APPPATH . '/third_party/phpseclib/Net/SSH2.php');
 
 require_once('application/libraries/Client.php');
 require_once('application/libraries/ZukoLibs.php');
+
 class Devices extends CI_Controller {
 
+public $ip_router = "10.10.10.1";
+public $ip_unifi = "10.10.10.43";
     
     public function __construct()
     {
@@ -328,7 +331,7 @@ class Devices extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ping',false);
                 $api->write('=address=192.168.10.7',false);
                 $api->write('=count=5',false);
@@ -711,7 +714,7 @@ class Devices extends CI_Controller {
 // UNIFI 
     function getUnifiDevices(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_devices();  
@@ -762,7 +765,7 @@ class Devices extends CI_Controller {
 
     function syncIdentitiesUniFi($serial){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_devices();  
@@ -806,7 +809,7 @@ class Devices extends CI_Controller {
     function updateOSUniFi(){
         $mac = '04:18:d6:cc:21:90';
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $results = $unifi_connection->upgrade_device($mac);
@@ -819,7 +822,7 @@ class Devices extends CI_Controller {
 
     function syncIPUniFiAll(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_devices();  
@@ -842,7 +845,7 @@ class Devices extends CI_Controller {
 
     function upgradeAllUniFi(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $results = $unifi_connection->start_rolling_upgrade();
@@ -862,7 +865,7 @@ class Devices extends CI_Controller {
         $mac = $this->input->post('mac');
         $identity = $this->input->post('identity');
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.115:8443', 'default', '5.10.25');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $results = $unifi_connection->restart_ap($mac);

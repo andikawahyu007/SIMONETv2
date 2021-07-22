@@ -2,6 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
+
+public $ip_router = "10.10.10.1";
+public $ip_unifi = "10.10.10.43";
     
     function __construct()
     {
@@ -68,7 +71,7 @@ class Dashboard extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/active/print');
                 $read = $api->read();
                 $api->disconnect();
@@ -85,7 +88,7 @@ class Dashboard extends CI_Controller {
             $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
-            if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/host/print');
                 $read = $api->read();
                 $api->disconnect();

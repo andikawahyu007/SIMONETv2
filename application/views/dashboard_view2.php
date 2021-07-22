@@ -421,7 +421,7 @@
             {
                 console.log("Error getResource");
             }
-        });
+        });s
 
         setTimeout(function(){ getTotal(); }, 5000);
     }

@@ -4,6 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Interfaces extends CI_Controller {
 
+
+public $ip_router = "10.10.10.1";
+public $ip_unifi = "10.10.10.43";
+
     public function __construct()
     {
         parent::__construct();
@@ -24,7 +28,7 @@ class Interfaces extends CI_Controller {
         $user = $this->devices->getUserRouter(array('id' => '1111'));
         $api->port = $user['port'];
         $_read = array();
-        if($api->connect("10.10.10.1",$user['username'],$user['password'])){
+        if($api->connect($this->ip_router,$user['username'],$user['password'])){
             $api->write('/interface/print');
             $data = $api->read();
             $api->disconnect();

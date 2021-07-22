@@ -68,11 +68,6 @@
 	var startDate;
 	var endDate;
 
-	$('body').on('click','a[data-aksi="print"]',function(){
-        // $("#divPrint").show();  
-		javascript:window.print();
-		// printDiv()
-    });
 
 	function printDiv(){
 		var divToPrint=document.getElementById('divPrint');
