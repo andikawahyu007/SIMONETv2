@@ -98,10 +98,7 @@
     $('body').on('click','a[data-aksi="hapus"]',function(){
         var id= $(this).attr('data-id');
         deleteUser(id);
-    });
-    
-
-    
+    }); 
 
     function deleteUser(id){
         var data = {id : id};

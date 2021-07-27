@@ -155,6 +155,10 @@
         ],
     });
 
+    $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) { 
+    console.log(message);
+    };
+
     $('#searchInterfacesField').keyup(function(){
         table.search($(this).val()).draw() ;
     })

@@ -4,8 +4,8 @@ require_once('application/libraries/Client.php');
 class Statistic extends CI_Controller {
 
 
-public $ip_router = "10.10.10.1";
-public $ip_unifi = "10.10.10.43";
+public $ip_router = "114.4.32.178";
+public $ip_unifi = "114.4.32.190";
 
     public function __construct()
     {

@@ -339,6 +339,13 @@
             }
         }
     });
+
+
+    $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) { 
+    console.log(message);
+    };
+    
+
     table.buttons().container().appendTo($('#button-table'));
 
 

@@ -30,9 +30,9 @@ public $ip_unifi = "10.10.10.43";
     {
         //$data['discovery'] = $this->discoveryDevices();
         //$data['unifiDevices'] = $this->getUnifiDevices();
-        $data['location'] = $this->getLocation();
-        $this->load->view('devices_view',$data);
-        
+        // $data['location'] = $this->getLocation();
+        // $this->load->view('devices_view',$data);
+        $this->load->view('devices_view');
     }
 
     public function detailDevice()
@@ -40,7 +40,7 @@ public $ip_unifi = "10.10.10.43";
         // function untuk menampilkan halaman detail user hotspot 
         $serial = $this->input->post('serial');
         $data = $this->devices->getdevice(array('serial_number'=> $serial));
-        $data['location'] = $this->getLocation();
+        // $data['location'] = $this->getLocation();
         $data['list_devices'] = $this->devices->getdevices();
         $data['last_ros'] = $this->devices->getLastesROS();
         $data['subdevices'] = $this->devices->getdevicesby(array('id_device' => $serial));
@@ -166,7 +166,7 @@ public $ip_unifi = "10.10.10.43";
         try{
             $api = $this->routerosapi;
             $api->port=$user['port'];
-            if($api->connect('10.10.10.1',$user['username'],$user['password'])){
+            if($api->connect('114.4.32.178',$user['username'],$user['password'])){
                 $api->write('/ip/neighbor/print');
                 $read = $api->read();
                 $api->disconnect();
@@ -897,20 +897,19 @@ public $ip_unifi = "10.10.10.43";
         }
     }
 
-    function getLocation(){
-        $zuko = new ZukoLibs;
-        $output = $zuko->connect();
-        $token = $output['data']['session_token'];
-        $par = array(
-            'filter' => array(),
-            'limit' => 150,
-            'offset' => 0,
-        );
+    // function getLocation(){
+    //     $zuko = new ZukoLibs;
+    //     $output = $zuko->connect();
+    //     $token = $output['data']['session_token'];
+    //     $par = array(
+    //         'filter' => array(),
+    //         'limit' => 150,
+    //         'offset' => 0,
+    //     );
 
-        $location = $zuko->get_ruang($token,$par);
-        return $location;
-
-    }
+    //     $location = $zuko->get_ruang($token,$par);
+    //     return $location;
+    // }
 
     function time_elapsed_B($secs){
         $bit = array(

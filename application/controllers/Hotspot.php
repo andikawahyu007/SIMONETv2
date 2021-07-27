@@ -197,23 +197,29 @@ public $ip_unifi = "10.10.10.43";
     }
 
     function userProfileJSON(){
-        // funtion untuk mengget semua data user profile dari database
-        $data = $this->hotspot->getuserprofile();
-        $_data = array();
-            foreach($data as $r){
-                if($this->session->userdata('role')==='adm'){    
-                    $r['aksi'] = "<a href='javascript:;' data-aksi='edit' data-id='".$r['id']."'><i class='fa fa-pencil-square-o'></i></a>
-                    <a href='javascript:;' data-aksi='hapus' data-id='".$r['id']."' style='color : rgb(218,86,80)'><i class='fa fa-trash-o'></i></a>";
-                }else{
-                    $r['aksi'] = '';
-                }
-                $_data[] = $r;
+        // funtion untuk mengget semua data user profile dari mikrotik
+        try{
+            $api = $this->routerosapi;
+            $user = $this->devices->getUserRouter(array('id' => '1111'));
+            $api->port = $user['port'];
+            $_read = array();
+            if($api->connect($this->ip_router,$user['username'],$user['password'])){
+                $api->write('/ip/hotspot/user/profile/print');
+                $read = $api->read();
+                $api->disconnect();
+                foreach($read as $r){
+                    $r['aksi'] = "<a href='javascript:;' data-aksi='hapus' data-nama='".$r['name']."' style='color : rgb(218,86,80)'><i class='fa fa-trash-o'></i></a>";
+                    $_read[] = $r;
+                }        
             }
-        $output = array(
-            "draw" => $this->input->post('draw'),
-            "data" => $_data,
-        );
-        echo json_encode($output);
+            $output = array(
+                // "draw" => $this->input->post('draw'),
+                "data" => $_read,
+            );
+            echo json_encode($output);       
+        }catch(Exeption $error){
+            return $error;
+        }
     }
 
     function getUserProfileByID(){
@@ -294,7 +300,7 @@ public $ip_unifi = "10.10.10.43";
     }
 
     function delUserProfile(){
-        // funtion untuk menghapust user profile di mikrotik dan database
+        // funtion untuk menghapust user profile di mikrotik
         $id = $this->input->post('id');
         try{
             $api = $this->routerosapi;
@@ -302,7 +308,7 @@ public $ip_unifi = "10.10.10.43";
             $api->port = $user['port'];
             if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/profile/remove',false);
-			    $api->write('=.id='.$id);
+                $api->write('=.'.$id);
                 $write = $api->read();
                 $api->disconnect();
                 $this->hotspot->deluserprofile($id);
