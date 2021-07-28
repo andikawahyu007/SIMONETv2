@@ -385,6 +385,7 @@ public $ip_unifi = "10.10.10.43";
 
     function userTrackJSON(){
         // function untuk mengget semua data lokas user active dari UNIFI
+        $ip_unifi = "10.10.10.43";
         $api = $this->routerosapi;
             $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
@@ -404,7 +405,7 @@ public $ip_unifi = "10.10.10.43";
             
 
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://'.$ip_unifi.':8443', '3pp0jtfi', '5.13.32');
         $set_debug_mode   = $unifi_connection->set_debug(false);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_clients();

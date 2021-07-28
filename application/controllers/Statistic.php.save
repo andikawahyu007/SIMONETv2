@@ -161,7 +161,7 @@ DataResource(array('first_date' => $first_date, 'last_date' => $last_date));
 
     function getUserCountAPJSON(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.43:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_devices();
@@ -216,7 +216,7 @@ DataResource(array('first_date' => $first_date, 'last_date' => $last_date));
 
     function getUserCountWLAN(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.43:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_devices();
@@ -244,7 +244,7 @@ DataResource(array('first_date' => $first_date, 'last_date' => $last_date));
 
     function getUserCountSSIDJSON(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.43:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_clients();
@@ -285,7 +285,7 @@ DataResource(array('first_date' => $first_date, 'last_date' => $last_date));
 
     function getUserCountRadioJSON(){
         $user = $this->devices->getUserRouter(array('id' => '3333'));
-        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://114.4.32.190:8443', '3pp0jtfi', '5.13.32');
+        $unifi_connection = new UniFi_API\Client($user['username'], $user['password'], 'https://10.10.10.43:8443', '3pp0jtfi', '5.13.32');
         // $set_debug_mode   = $unifi_connection->set_debug(true);
         $loginresults     = $unifi_connection->login();
         $aps_array        = $unifi_connection->list_clients();
