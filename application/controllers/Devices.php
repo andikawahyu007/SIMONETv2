@@ -166,7 +166,7 @@ public $ip_unifi = "10.10.10.43";
         try{
             $api = $this->routerosapi;
             $api->port=$user['port'];
-            if($api->connect('114.4.32.178',$user['username'],$user['password'])){
+            if($api->connect('10.10.10.1',$user['username'],$user['password'])){
                 $api->write('/ip/neighbor/print');
                 $read = $api->read();
                 $api->disconnect();
@@ -636,7 +636,7 @@ public $ip_unifi = "10.10.10.43";
 
     function cekMikroTik(){
         // $ip = $this->input->post('ip');
-        $ip = '10.10.10.14';
+        $ip = '10.10.10.1';
         // $mac = '00:0C:42:E5:0D:C6';
         $user = $this->devices->getUserRouter(array('id' => '2222'));
         try{

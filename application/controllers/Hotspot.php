@@ -64,6 +64,8 @@ public $ip_unifi = "10.10.10.43";
                     $r['bytes_out'] = byte_format($r['bytes-out']); 
                     if($this->session->userdata('role')==='adm'){    
                         $r['aksi'] = "<a href='javascript:;' data-aksi='edit' data-id='".$r['.id']."'><i class='fa fa-pencil-square-o'></i></a>
+                    &nbsp;
+                    &nbsp;
                         <a href='javascript:;' data-aksi='hapus' data-id='".$r['.id']."' style='color : rgb(218,86,80)'><i class='fa fa-trash-o'></i></a>";
                     }else{
                         $r['aksi'] = '';
@@ -208,13 +210,19 @@ public $ip_unifi = "10.10.10.43";
                 $read = $api->read();
                 $api->disconnect();
                 foreach($read as $r){
-                    $r['aksi'] = "<a href='javascript:;' data-aksi='hapus' data-nama='".$r['name']."' style='color : rgb(218,86,80)'><i class='fa fa-trash-o'></i></a>";
+                    $r['aksi'] = "<a href='javascript:;' data-aksi='pindah' data-id='".$r['.id']."' style='color : rgb(63,194,19)'><i class='fa fa-random'></i></a>
+                    &nbsp;
+                    &nbsp;
+                    <a href='javascript:;' data-aksi='edit' data-id='".$r['.id']."'><i class='fa fa-pencil-square-o'></i></a>
+                    &nbsp;
+                    &nbsp;
+                    <a href='javascript:;' data-aksi='hapus' data-id='".$r['.id']."' style='color : rgb(218,86,80)'><i class='fa fa-trash-o'></i></a>"; 
                     $_read[] = $r;
                 }        
             }
             $output = array(
                 // "draw" => $this->input->post('draw'),
-                "data" => $_read,
+                "data" => $_read
             );
             echo json_encode($output);       
         }catch(Exeption $error){
@@ -225,7 +233,7 @@ public $ip_unifi = "10.10.10.43";
     function getUserProfileByID(){
         // funtion untuk mengget data user profile by id
         $id = $this->input->post('id');
-        $data = $this->hotspot->getuserprofilebyid(array('id'=> $id));
+        $data = $this->hotspot->getUserProfileByID(array('id'=> '*'.$id));
         if($data){
             echo json_encode($data);
         }
@@ -237,9 +245,8 @@ public $ip_unifi = "10.10.10.43";
             'id' => $this->input->post('id'),
             'name' => $this->input->post('name'),
             'session_timeout' => $this->input->post('session'),
-            'status_autorefresh' => $this->input->post('status'),
+            'idle_timeout' => $this->input->post('idle'),
             'shared_users' => $this->input->post('shared'),
-            'add_mac_cookie' => $this->input->post('cookie'),
             'rate_limit' => $this->input->post('limit')
         );
         try{
@@ -251,10 +258,9 @@ public $ip_unifi = "10.10.10.43";
 			    $api->write('=.id='.$data['id'],false);
 			    $api->write('=name='.$data['name'], false );
 			    $api->write('=session-timeout='.$data['session_timeout'], false );
-			    $api->write('=status-autorefresh='.$data['status_autorefresh'], false );
+                $api->write('=idle-timeout='.$data['idle_timeout'], false );
 			    $api->write('=shared-users='.$data['shared_users'], false );
-			    $api->write('=add-mac-cookie='.$data['add_mac_cookie'], false );
-			    $api->write('=rate-limit='.$data['rate_limit']);
+			    $api->write('=rate-limit='.$data['rate_limit'].'M/'.$data['rate_limit'].'M');
                 $write = $api->read();
                 $api->disconnect();
                 echo json_encode(array("status" => TRUE));
@@ -271,10 +277,9 @@ public $ip_unifi = "10.10.10.43";
         $data = array(
             'name' => $this->input->post('name'),
             'session_timeout' => $this->input->post('session'),
-            'status_autorefresh' => $this->input->post('status'),
+            'idle_timeout' => $this->input->post('idle'),
             'shared_users' => $this->input->post('shared'),
-            'add_mac_cookie' => $this->input->post('cookie'),
-            'rate_limit' => $this->input->post('limit')
+            'rate_limit' => $this->input->post('limit'),
         );
         try{
             $api = $this->routerosapi;
@@ -284,10 +289,13 @@ public $ip_unifi = "10.10.10.43";
                 $api->write('/ip/hotspot/user/profile/add',false);
 			    $api->write('=name='.$data['name'], false );
 			    $api->write('=session-timeout='.$data['session_timeout'], false );
-			    $api->write('=status-autorefresh='.$data['status_autorefresh'], false );
+                $api->write('=idle-timeout='.$data['idle_timeout'], false );
+                $api->write('=keepalive-timeout=none', false );
 			    $api->write('=shared-users='.$data['shared_users'], false );
-			    $api->write('=add-mac-cookie='.$data['add_mac_cookie'], false );
-			    $api->write('=rate-limit='.$data['rate_limit']);
+                $api->write('=rate-limit='.$data['rate_limit'].'M/'.$data['rate_limit'].'M', false);
+			    $api->write('=add-mac-cookie=yes', false );
+                $api->write('=mac-cookie-timeout=1d', false );
+                $api->write('=insert-queue-before=Limitasi-VPN-Siakad');
                 $write = $api->read();
                 $api->disconnect();
                 echo json_encode(array("status" => TRUE, "data" => $data));
@@ -308,13 +316,12 @@ public $ip_unifi = "10.10.10.43";
             $api->port = $user['port'];
             if($api->connect($this->ip_router,$user['username'],$user['password'])){
                 $api->write('/ip/hotspot/user/profile/remove',false);
-                $api->write('=.'.$id);
+                $api->write('=.id='.$id);
                 $write = $api->read();
                 $api->disconnect();
-                $this->hotspot->deluserprofile($id);
                 echo json_encode(array("status" => TRUE));
             }else{
-                echo json_encode(array("status" => FALSE));
+                echo json_encode(array("status" => TRUE));
             }
         }catch(exeption $e){
             echo $e;
@@ -435,16 +442,7 @@ public $ip_unifi = "10.10.10.43";
                 $aps->ap_mac = $_devices[$aps->ap_mac]->name;
             $_aps_array[] = $aps;
         }
-
-        // echo json_encode($_read);
         echo json_encode($_aps_array);
-        // echo json_encode($user_aktif);
-        // echo(json_encode($aps_array));
-
-        // var_dump($unifi_connection->is_loggedin);
-        // print_r($unifi_connection);
-        // print_r($loginresults);
-        // var_dump($aps_array);
     }
 
     function delUserActive(){
