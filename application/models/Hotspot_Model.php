@@ -49,7 +49,7 @@ class Hotspot_Model extends CI_Model {
     function syncUserHotspot($data){
         try{
             foreach($data as $user){
-                if(!isset($user['default'])){
+                if($user){
                     $this->db->query("insert into user_hotspot(id,name,password,profile,uptime,bytes_in,bytes_out,disabled)
                     values ('".$user['.id']."','".$user['name']."','".$user['password']."','".$user['profile']."','".$user['uptime']."'
                     ,'".$user['bytes-in']."','".$user['bytes-out']."','".$user['disabled']."') 

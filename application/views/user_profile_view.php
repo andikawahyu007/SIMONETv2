@@ -123,7 +123,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_form" role="dialog" >
+<div class="modal fade" id="modal_form_isp" role="dialog" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -131,7 +131,7 @@
                 <h4 class="modal-title" id="modal-title">Add User Profile</h4>
             </div>
             <div class="modal-body form">
-            <form id="form-path" action="＃" method="post" class="form-horizontal row-border">
+            <form id="form-isp" action="＃" method="post" class="form-horizontal row-border">
                 <input type="hidden" value="" name="id"/> 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Name</label>
@@ -141,8 +141,8 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">ISP</label>
-                    <div class="col-sm-8">
-                        <select id="isp" name="isp" class="form-control">
+                    <div id="dataISP" class="col-sm-8">
+                        <select id="isp" name="isp" class="form-control" required>
                         <option value="Indosat">Indosat</option>
                         <option value="iForte">iForte</option>
                         <option value="prov3">MNC 1</option>
@@ -315,20 +315,18 @@
     function pindahProfile(id){
         save_method = 'pindah';
         var data = {id : id};
-        $('#form-path')[0].reset();
+        $('#form-isp')[0].reset();
         $('.form-group').removeClass('has-error');
         $('.help-block').empty(); 
 
         $.post('<?php echo site_url('hotspot/getUserProfileByID/') ?>',data,function(respon){
+            console.log(respon);
             if(respon){
                 $('[name="id"]').val(respon.id);
                 $('[name="name"]').val(respon.name);
-                $('[name="session-timeout"]').val(null);
-                $('[name="idle-timeout"]').val(null);
-                $('[name="shared-users"]').val(null);
-                $('[name="rate-limit"]').val(null);
-                $('#modal_form').modal('show');
-                $('.modal-title').text('Edit User Profile');
+                $('[name="isp"]').val(null);
+                $('#modal_form_isp').modal('show');
+                $('.modal-title').text('Edit Route User Profile');
             }
             else{ alert('error delete this data');
             }
@@ -344,21 +342,26 @@
     
         if(save_method == 'add') {
             url = "<?php echo site_url('hotspot/addUserProfile')?>";
-        } else {
+        } else if (save_method == 'update') {
             url = "<?php echo site_url('hotspot/setUserProfile')?>";
+        } else {
+            url = "<?php echo site_url('hotspot/changeRoute')?>";
         }
         console.log($('#form-profile').serialize());
+        console.log($('#form-isp').serialize());
 
         $.ajax({
             url : url,
             type: "POST",
             data: $('#form-profile').serialize(),
+            data: $('#form-isp').serialize(),
             dataType: "JSON",
             success: function(data)
             {
                 if(data.status) 
                 {
                     $('#modal_form').modal('hide');
+                    $('#modal_form_isp').modal('hide');
                     syncProfile();
                     reload_table();
                     if(save_method == 'add') {
@@ -369,7 +372,7 @@
                             icon: 'ti ti-user',
                             styling: 'fontawesome'
                         });
-                    } else {
+                    } else if (save_method == 'update') {
                         new PNotify({
                             title: 'Edit Profile',
                             text: 'Merubah User Profile Berhasil',
@@ -377,6 +380,14 @@
                             icon: 'ti ti-user',
                             styling: 'fontawesome'
                         });    
+                    } else {
+                        new PNotify({
+                            title: 'Edit Route Profile',
+                            text: 'Merubah Route Profile Berhasil',
+                            type: 'success',
+                            icon: 'ti ti-user',
+                            styling: 'fontawesome'
+                        });                            
                     }
                 }
                 $('#btnSave').text('save'); 
@@ -408,9 +419,9 @@
                 reload_table();
                 $.skylo('end');
             },
-            // error: function (jqXHR, textStatus, errorThrown){
-            //     alert('Error!!');
-            // }
+            error: function (jqXHR, textStatus, errorThrown){
+                alert('Error!!');
+            }
         })
         // reload_table();
         // $.skylo('end');
@@ -421,6 +432,7 @@
         if(confirm('Anda yakin ingin menghapus data ini ?')){
             $.post('<?php echo site_url('hotspot/delUserProfile/') ?>',data,function(respon){
                 if(respon.status){
+                    syncProfile();
                     reload_table();
                     new PNotify({
                         title: 'Remove Profile',
@@ -430,10 +442,10 @@
                         styling: 'fontawesome'
                     });
                 }
-                else{ alert('error delete this data');
+                else{ alert('error delete this data 1');
                 }
             },'json').fail(function(){
-                alert('error delete this data');
+                alert('error delete this data 2');
             })
         }
     }

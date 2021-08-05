@@ -316,15 +316,15 @@
                     icon: 'ti ti-user',
                     styling: 'fontawesome'
                 }); 
-                reload_table();
-                $.skylo('end');
+                // reload_table();
+                // $.skylo('end');
             },
-            error: function (jqXHR, textStatus, errorThrown){
-                alert('Error!!');
-            }
+            // error: function (jqXHR, textStatus, errorThrown){
+            //     alert('Error!!');
+            // }
         })
-        // reload_table();
-        // $.skylo('end');
+        reload_table();
+        $.skylo('end');
     }
 
     function deleteUser(id){
