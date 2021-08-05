@@ -314,8 +314,8 @@ public $ip_unifi = "10.10.10.43";
             'isp' => $this->input->post('isp'),
         );
         try{
-            $namascript = '[simonet] "'.$data['name'].'" pindah ke "'.$data['isp'].'"';
-            // $source = nl2br(':foreach i in=[/ip hotspot user find] do={:if ([/ip hotspot user get $i profile]="'.$data['name'].'") do={:local vuser [/ip hotspot user get $i name];:log warning "1. ambil profile : $[/ip hotspot user get $i name]";:foreach j in=[/ip hotspot active find user=$vuser] do={:local vip [/ip hotspot active get $j address];:log warning "2. ip hotspot : $vip";/ip firewall address-list add address=$vip list='.$data['isp'].'Bucket disabled=no;:log warning "3. tambahkan ke '.$data['isp'].'Bucket";}}}:log warning "4. pindahkan jalur ke '.$data['isp'].'";');
+            $namascript = '[simonet-test] "'.$data['name'].'" pindah ke "'.$data['isp'].'"';
+            $source = ':foreach i in=[/ip hotspot user find] do={ \ :if ([/ip hotspot user get $i profile]="'.$data['name'].'") do={ \ :local vuser [/ip hotspot user get $i name]; \ :log warning "1. ambil profile : $[/ip hotspot user get $i name]"; \ :foreach j in=[/ip hotspot active find user=$vuser] do={ \ :local vip [/ip hotspot active get $j address]; \ :log warning "2. ip hotspot : $vip"; \ /ip firewall address-list add address=$vip list='.$data['isp'].'Bucket disabled=no; \ :log warning "3. tambahkan ke '.$data['isp'].'Bucket"; \ } \ } \ }';
 
             // echo $namascript;
             // echo $source;
@@ -325,10 +325,24 @@ public $ip_unifi = "10.10.10.43";
             $api->port = $user['port'];
             // echo json_encode($user);
             if($api->connect($this->ip_router,$user['username'],$user['password'])){
+                $api->write('/system/script/print');
+                $read = $api->read();
+                foreach($read as $r){                    
+                    $_read[] = $r;
+                    if ($r['name'] == $namascript){
+                        $idlama = $r['.id'];
+                        if ($idlama != null){
+                            $api->write('/system/script/remove',false);
+                            $api->write('=.id='.$idlama);
+                            $write = $api->read();
+                        }
+                    }
+                }
+
                 $api->write('/system/script/add',false);
                 $api->write('=name='.$namascript,false);
                 $api->write('=dont-require-permissions=yes',false);
-                $api->write('=source=:foreach i in=[/ip hotspot user find] do={:if ([/ip hotspot user get $i profile]="'.$data['name'].'") do={:local vuser [/ip hotspot user get $i name];:log warning "1. ambil profile : $[/ip hotspot user get $i name]";:foreach j in=[/ip hotspot active find user=$vuser] do={:local vip [/ip hotspot active get $j address];:log warning "2. ip hotspot : $vip";/ip firewall address-list add address=$vip list='.$data['isp'].'Bucket disabled=no;:log warning "3. tambahkan ke '.$data['isp'].'Bucket";}}}:log warning "4. pindahkan jalur ke '.$data['isp'].'";');
+                $api->write('=source='.$source);
                 $write = $api->read();
 
                 $api->write('/system/script/print');
@@ -336,11 +350,11 @@ public $ip_unifi = "10.10.10.43";
                 foreach($read as $r){                    
                     $_read[] = $r;
                     if ($r['name'] == $namascript){
-                        $id = $r['.id'];
+                        $idbaru = $r['.id'];
                     }
                 }
                 $api->write('/system/script/run',false);
-                $api->write('=.id='.$id);
+                $api->write('=.id='.$idbaru);
                 $write = $api->read();
 
                 $api->disconnect();

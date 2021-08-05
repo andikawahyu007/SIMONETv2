@@ -136,7 +136,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-8">
-                        <input type="input" name="name" class="form-control" placeholder='User Profile Name' required>
+                        <input type="text" name="name" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="form-group">
@@ -395,7 +395,10 @@
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
+                // $('#modal_form').modal('hide');
+                // $('#modal_form_isp').modal('hide');
                 alert('Gagal menyimpan user profile');
+
                 $('#btnSave').text('save'); 
                 $('#btnSave').attr('disabled',false); 
             }
