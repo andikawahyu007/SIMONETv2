@@ -117,7 +117,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" id="btnSave" onClick="save()" class="btn btn-success">Save</button>
+                <button type="submit" id="btnSave" onClick="saveProfile()" class="btn btn-success">Save</button>
             </div>
         </div>
     </div>
@@ -155,7 +155,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" id="btnSave" onClick="save()" class="btn btn-success">Save</button>
+                <button type="submit" id="btnSave" onClick="saveRoute()" class="btn btn-success">Save</button>
             </div>
         </div>
     </div>
@@ -335,7 +335,7 @@
         })
     }
 
-    function save(){
+    function saveProfile(){
         $('#btnSave').text('saving...'); //change button text
         $('#btnSave').attr('disabled',true); //set button disable 
         var url;
@@ -348,20 +348,17 @@
             url = "<?php echo site_url('hotspot/changeRoute')?>";
         }
         console.log($('#form-profile').serialize());
-        console.log($('#form-isp').serialize());
 
         $.ajax({
             url : url,
             type: "POST",
             data: $('#form-profile').serialize(),
-            data: $('#form-isp').serialize(),
             dataType: "JSON",
             success: function(data)
             {
                 if(data.status) 
                 {
                     $('#modal_form').modal('hide');
-                    $('#modal_form_isp').modal('hide');
                     syncProfile();
                     reload_table();
                     if(save_method == 'add') {
@@ -380,14 +377,6 @@
                             icon: 'ti ti-user',
                             styling: 'fontawesome'
                         });    
-                    } else {
-                        new PNotify({
-                            title: 'Edit Route Profile',
-                            text: 'Merubah Route Profile Berhasil',
-                            type: 'success',
-                            icon: 'ti ti-user',
-                            styling: 'fontawesome'
-                        });                            
                     }
                 }
                 $('#btnSave').text('save'); 
@@ -395,8 +384,51 @@
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
-                // $('#modal_form').modal('hide');
-                // $('#modal_form_isp').modal('hide');
+                alert('Gagal menyimpan user profile');
+
+                $('#btnSave').text('save'); 
+                $('#btnSave').attr('disabled',false); 
+            }
+        });
+    }
+
+    function saveRoute(){
+        $('#btnSave').text('saving...'); //change button text
+        $('#btnSave').attr('disabled',true); //set button disable 
+        var url;
+    
+        if(save_method == 'pindah') {
+            url = "<?php echo site_url('hotspot/changeRoute')?>";
+        }
+        console.log($('#form-isp').serialize());
+
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#form-isp').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+                if(data.status) 
+                {
+                    $('#modal_form_isp').modal('hide');
+                    syncProfile();
+                    reload_table();
+                    if(save_method == 'pindah') {
+                        new PNotify({
+                            title: 'Edit Route Profile',
+                            text: 'Merubah Route Profile Berhasil',
+                            type: 'success',
+                            icon: 'ti ti-user',
+                            styling: 'fontawesome'
+                        });
+                    }
+                }
+                $('#btnSave').text('save'); 
+                $('#btnSave').attr('disabled',false); 
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
                 alert('Gagal menyimpan user profile');
 
                 $('#btnSave').text('save'); 

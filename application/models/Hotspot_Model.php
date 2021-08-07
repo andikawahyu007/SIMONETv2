@@ -86,18 +86,19 @@ class Hotspot_Model extends CI_Model {
     
     function delUserProfile($id){
         $this->db->delete('user_profile',array('id' => $id));
-        
+    }
+
+    function delProfile(){
+        $this->db->query('truncate table user_profile');   
     }
 
     function syncUserProfile($data){
         try{
             foreach($data as $profile){
                 if($profile){
-                    $this->db->query("insert into user_profile(id,name,session_timeout,status_autorefresh,shared_users,add_mac_cookie,rate_limit)
-                    values ('".$profile['.id']."','".$profile['name']."','".$profile['session-timeout']."','".$profile['status-autorefresh']."','".$profile['shared-users']."'
-                    ,'".$profile['add-mac-cookie']."','".$profile['rate-limit']."') 
-                    ON DUPLICATE KEY UPDATE name = '".$profile['name']."', session_timeout = '".$profile['session-timeout']."', status_autorefresh = '".$profile['status-autorefresh']."',
-                    shared_users = '".$profile['shared-users']."', add_mac_cookie = '".$profile['add-mac-cookie']."', rate_limit = '".$profile['rate-limit']."'");
+                    $this->db->query("insert into user_profile(id,name,session_timeout,idle_timeout,status_autorefresh,shared_users,add_mac_cookie,rate_limit)
+                    values ('".$profile['.id']."','".$profile['name']."','".$profile['session-timeout']."','".$profile['idle-timeout']."','".$profile['status-autorefresh']."','".$profile['shared-users']."'
+                    ,'".$profile['add-mac-cookie']."','".$profile['rate-limit']."')");
                 }
             }
         }catch(Exception $e){

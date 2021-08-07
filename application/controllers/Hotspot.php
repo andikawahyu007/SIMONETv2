@@ -321,7 +321,7 @@ public $ip_unifi = "10.10.10.43";
             // echo $source;
 
             $api = $this->routerosapi;
-            $user = $this->devices->getUserRouter(array('id' => '4444'));
+            $user = $this->devices->getUserRouter(array('id' => '1111'));
             $api->port = $user['port'];
             // echo json_encode($user);
             if($api->connect($this->ip_router,$user['username'],$user['password'])){
@@ -367,10 +367,6 @@ public $ip_unifi = "10.10.10.43";
         }
     }
 
-    function runScript(){
-
-    }
-
     function delUserProfile(){
         // funtion untuk menghapust user profile di mikrotik
         $id = $this->input->post('id');
@@ -402,6 +398,7 @@ public $ip_unifi = "10.10.10.43";
                 $api->write('/ip/hotspot/user/profile/print');
                 $read = $api->read();
                 $api->disconnect();
+                $this->hotspot->delProfile();
                 $this->hotspot->syncUserProfile($read); 
                 echo json_encode(array("status" => TRUE));
             }else{
