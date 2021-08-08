@@ -203,9 +203,9 @@ $('.n-topology').appendTo($('.container-topology'));
 $('.n-topology').css('width','100%');
 $('.n-topology svg').css('width','100%');
 $('body').on('click','a[data-aksi="print"]',function(){
-    // $("#divPrint").show();  
+    $("#divPrint").show();  
     javascript:window.print();
-    // printDiv()
+    printDiv()
 });
 
 function printDiv(){

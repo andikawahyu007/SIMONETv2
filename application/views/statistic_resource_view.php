@@ -71,9 +71,9 @@
 	// var chartResource;
 
 	$('body').on('click','a[data-aksi="print"]',function(){
-        // $("#divPrint").show();  
+        $("#divPrint").show();  
 		javascript:window.print();
-		// printDiv()
+		printDiv()
     });
 
 	function printDiv(){
